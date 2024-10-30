@@ -17,3 +17,5 @@
 #include "World.h"
 
 // typedef std::vector<Unit*> Entity;
+
+#include "spdlog/spdlog.h"

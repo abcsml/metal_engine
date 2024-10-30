@@ -1,5 +1,5 @@
 #include "MTLEngine.h"
-#include <iostream>
+#include "spdlog/spdlog.h"
 
 MTL::Device* MTLEngine::metalDevice_ = nullptr;
 // MTKView* MTLEngine::metalView = nullptr;
@@ -7,7 +7,7 @@ MTL::Library* MTLEngine::metalDefaultLibrary_ = nullptr;
 MTL::CommandQueue* MTLEngine::metalCommandQueue_ = nullptr;
 
 void MTLEngine::init(MTL::Device* device) {
-    std::cout << "MTLEngine init\n";
+    spdlog::info("MTLEngine init");
     metalDevice_ = device;
     // metalView = metalView;
     assert(metalDevice_);
@@ -15,7 +15,7 @@ void MTLEngine::init(MTL::Device* device) {
 
     metalDefaultLibrary_ = metalDevice_->newDefaultLibrary();
     if(!metalDefaultLibrary_){
-        std::cerr << "Failed to load default library.";
+        spdlog::error("Failed to load default library.");
         std::exit(-1);
     }
 

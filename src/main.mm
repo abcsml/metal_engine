@@ -27,6 +27,8 @@ public:
 };
 
 int main() {
+    spdlog::set_level(spdlog::level::trace);
+
     @autoreleasepool {
         // 初始化App和MTLEngine(在App内部)
         [NSApplication sharedApplication];

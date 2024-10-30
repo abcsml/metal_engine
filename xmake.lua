@@ -4,6 +4,8 @@ set_project("MyApp")
 set_version("1.0.0")
 set_languages("gnuxx17")
 
+add_requires("spdlog")
+
 target("MyApp")
     add_rules("xcode.application")
     set_kind("binary")
@@ -20,5 +22,6 @@ target("MyApp")
     add_cxflags("-fobjc-arc")  -- Enable ARC (Automatic Reference Counting)
 
     add_frameworks("Cocoa", "AppKit", "Metal", "MetalKit", "QuartzCore")
+    add_packages("spdlog")
 
     set_targetdir("build")

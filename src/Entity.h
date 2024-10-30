@@ -6,6 +6,7 @@ using namespace std;
 #include "common.h"
 
 #include "Unit.h"
+#include "spdlog/spdlog.h"
 
 // class Entity {
 // public:
@@ -18,6 +19,7 @@ using Entity = size_t;
 class EntityManager {
 public:
     Entity createEntity() {
+        spdlog::trace("create Entity {}", nextEntityId);
         nextEntityId ++;
         assert(nextEntityId); // 检查溢出
         return nextEntityId--;
