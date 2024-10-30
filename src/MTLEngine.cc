@@ -1,37 +1,37 @@
 #include "MTLEngine.h"
 #include <iostream>
 
-MTL::Device* MTLEngine::metalDevice = nullptr;
+MTL::Device* MTLEngine::metalDevice_ = nullptr;
 // MTKView* MTLEngine::metalView = nullptr;
-MTL::Library* MTLEngine::metalDefaultLibrary = nullptr;
-MTL::CommandQueue* MTLEngine::metalCommandQueue = nullptr;
+MTL::Library* MTLEngine::metalDefaultLibrary_ = nullptr;
+MTL::CommandQueue* MTLEngine::metalCommandQueue_ = nullptr;
 
 void MTLEngine::init(MTL::Device* device) {
     std::cout << "MTLEngine init\n";
-    metalDevice = device;
+    metalDevice_ = device;
     // metalView = metalView;
-    assert(metalDevice);
+    assert(metalDevice_);
     // assert(metalView);
 
-    metalDefaultLibrary = metalDevice->newDefaultLibrary();
-    if(!metalDefaultLibrary){
+    metalDefaultLibrary_ = metalDevice_->newDefaultLibrary();
+    if(!metalDefaultLibrary_){
         std::cerr << "Failed to load default library.";
         std::exit(-1);
     }
 
-    metalCommandQueue = metalDevice->newCommandQueue();
+    metalCommandQueue_ = metalDevice_->newCommandQueue();
 }
 
 MTL::Device* MTLEngine::getDevice() {
-    return metalDevice;
+    return metalDevice_;
 }
 
 MTL::Library* MTLEngine::getLibrary() {
-    return metalDefaultLibrary;
+    return metalDefaultLibrary_;
 }
 
 MTL::CommandQueue* MTLEngine::getCommandQueue() {
-    return metalCommandQueue;
+    return metalCommandQueue_;
 }
 
 // CA::MetalDrawable* MTLEngine::getCurrentDrawable() {

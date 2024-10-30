@@ -17,10 +17,10 @@ private:
     // static void initDefaultLibrary();
     // static void initCommandQueue();
 
-    static MTL::Device* metalDevice;
+    static MTL::Device* metalDevice_;
     // static MTKView* metalView;
-    static MTL::Library* metalDefaultLibrary;
-    static MTL::CommandQueue* metalCommandQueue;
+    static MTL::Library* metalDefaultLibrary_;
+    static MTL::CommandQueue* metalCommandQueue_;
 
 private:
     MTLEngine() = delete;
