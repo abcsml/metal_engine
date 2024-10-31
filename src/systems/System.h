@@ -10,5 +10,17 @@ public:
     virtual void init(EntityManager* em) {
         em_ = em;
     };
-    virtual void update(CA::MetalDrawable* drawable) {};
+    
+    // update默认自动化更新
+    virtual void update() {
+        vector<Entity> ets = em_->forEachEntity([this](Entity e){
+            return filter(e);
+        });
+        for(auto& e: ets) {
+            task(e);
+        }
+    };
+
+    virtual bool filter(Entity entity) const { return false; };
+    virtual void task(Entity entity) {};
 };

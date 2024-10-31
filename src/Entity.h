@@ -3,7 +3,7 @@
 #include <typeindex>
 using namespace std;
 
-#include "common.h"
+// #include "common.h"
 
 #include "unit.h"
 #include "spdlog/spdlog.h"
@@ -74,6 +74,16 @@ public:
                 func(unit.first, static_cast<U*>(unit.second));
             }
         }
+    };
+
+    template <typename Func>
+    vector<Entity> forEachEntity(Func func) const {
+        vector<Entity> ets;
+        ets.reserve(entityTable_.size());
+        std::for_each(entityTable_.begin(), entityTable_.end(),
+            [&ets, func](auto& p){ if (func(p.first)) ets.emplace_back(p.first); }
+        );
+        return ets;
     };
 
 private:
