@@ -8,8 +8,8 @@ void RenderSystem::init(EntityManager* em) {
     createRenderPipeline();
 };
 
-void RenderSystem::update(CA::MetalDrawable* drawable) {
-    sendRenderCommand(drawable);
+void RenderSystem::update() {
+    sendRenderCommand(MTLEngine::getCurrentDrawable());
 };
 void RenderSystem::createRenderPipeline() {
     MTL::Library* metalDefaultLibrary = MTLEngine::getLibrary();

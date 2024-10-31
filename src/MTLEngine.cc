@@ -2,16 +2,16 @@
 #include "spdlog/spdlog.h"
 
 MTL::Device* MTLEngine::metalDevice_ = nullptr;
-// MTKView* MTLEngine::metalView = nullptr;
+CA::MetalLayer* MTLEngine::metalLayer_ = nullptr;
 MTL::Library* MTLEngine::metalDefaultLibrary_ = nullptr;
 MTL::CommandQueue* MTLEngine::metalCommandQueue_ = nullptr;
 
-void MTLEngine::init(MTL::Device* device) {
+void MTLEngine::init(MTL::Device* device, CA::MetalLayer* layer) {
     spdlog::info("MTLEngine init");
     metalDevice_ = device;
-    // metalView = metalView;
+    metalLayer_ = layer;
     assert(metalDevice_);
-    // assert(metalView);
+    assert(metalLayer_);
 
     metalDefaultLibrary_ = metalDevice_->newDefaultLibrary();
     if(!metalDefaultLibrary_){
@@ -34,9 +34,9 @@ MTL::CommandQueue* MTLEngine::getCommandQueue() {
     return metalCommandQueue_;
 }
 
-// CA::MetalDrawable* MTLEngine::getCurrentDrawable() {
-//     return (__bridge CA::MetalDrawable*) [metalView currentDrawable];
-// }
+CA::MetalDrawable* MTLEngine::getCurrentDrawable() {
+    return metalLayer_->nextDrawable();
+}
 
 // CA::MetalDrawable* MTLEngine::getNextDrawable() {
 //     return (__bridge CA::MetalDrawable*) [metalView nextDrawable];

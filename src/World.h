@@ -25,9 +25,9 @@ public:
         systems.push_back(system);
     };
 
-    void update(CA::MetalDrawable* drawable) {
+    void update() {
         for (auto& system: systems) {
-            system->update(drawable);
+            system->update();
         }
     };
 

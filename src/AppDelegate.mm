@@ -51,8 +51,8 @@
     [_window makeKeyAndOrderFront:NSApp];
 
     // init engine
-    // MTLEngine::init((__bridge MTL::Device*) _device, view);
-    MTLEngine::init((__bridge MTL::Device*) _device);
+    MTLEngine::init((__bridge MTL::Device*) _device, (__bridge CA::MetalLayer*) view.layer);
+    // MTLEngine::init((__bridge MTL::Device*) _device);
     // init world
     _viewer->setup();
 }
@@ -83,7 +83,8 @@
 }
 
 - (void)drawInMTKView:(MTKView*)view {
-    _viewer->update((__bridge CA::MetalDrawable*) [view currentDrawable]);
+    // _viewer->update((__bridge CA::MetalDrawable*) [view currentDrawable]);
+    _viewer->update();
 }
 
 // window delegate

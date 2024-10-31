@@ -8,7 +8,7 @@ private:
 
 public:
     void init(EntityManager* em) override;
-    void update(CA::MetalDrawable* drawable) override;
+    void update() override;
 
 private:
     void createRenderPipeline();
