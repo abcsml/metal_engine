@@ -54,7 +54,7 @@
     // MTLEngine::init((__bridge MTL::Device*) _device, view);
     MTLEngine::init((__bridge MTL::Device*) _device);
     // init world
-    _viewer->draw();
+    _viewer->setup();
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

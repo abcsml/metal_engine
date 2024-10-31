@@ -5,7 +5,7 @@ using namespace std;
 
 #include "common.h"
 
-#include "Unit.h"
+#include "unit.h"
 #include "spdlog/spdlog.h"
 
 // class Entity {
@@ -22,7 +22,7 @@ public:
         spdlog::trace("create Entity {}", nextEntityId);
         nextEntityId ++;
         assert(nextEntityId); // 检查溢出
-        return nextEntityId--;
+        return nextEntityId-1;
     };
 
     void deleteEntity(Entity entity) {

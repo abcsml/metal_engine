@@ -13,7 +13,7 @@ target("MyApp")
     add_includedirs("lib/metal-cpp")
 
     add_includedirs("src")
-    add_files("src/*.mm", "src/*.cc")
+    add_files("src/*.mm", "src/*.cc", "src/*/*.cc")
 
     add_files("src/*.metal")
     add_files("src/Info.plist")

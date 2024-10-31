@@ -7,14 +7,14 @@
 #include <vector>
 #include <simd/simd.h>
 
-#include "VertexData.h"
-#include "MTLEngine.h"
+// #include "VertexData.h"
+// #include "MTLEngine.h"
 
-// ecs
-#include "Entity.h"
-#include "Unit.h"
-#include "System.h"
-#include "World.h"
+// // ecs
+// #include "Entity.h"
+// #include "Unit.h"
+// #include "System.h"
+// #include "World.h"
 
 // typedef std::vector<Unit*> Entity;
 

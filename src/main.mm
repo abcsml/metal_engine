@@ -2,27 +2,39 @@
 #import "AppDelegate.h"
 
 #import "common.h"
+#import "system.h"
+
+#import "Shape.h"
+
+class MySystem: public System {
+public:
+    void update(CA::MetalDrawable* drawable) {
+        PositionUnit* pos = em_->getUnit<PositionUnit>(0);
+        pos->data_.x += 0.001;
+    };
+};
 
 class MyWorld: public World {
 public:
-    void draw() override {
-    // MyWorld() {
-        RenderUnit::VertexData triangle;
-        triangle.vertices.push_back(simd::make<simd::float3>(-0.5, -0.5, 0));
-        triangle.vertices.push_back(simd::make<simd::float3>(-0.5,  0.5, 0));
-        triangle.vertices.push_back(simd::make<simd::float3>( 0.0,  0.0, 0));
-        triangle.primitiveType = MTL::PrimitiveTypeTriangle;
+    void setup() override {
+        spdlog::info("World setup");
 
-        Entity* entity = new Entity;
-        entity->test = new TestUnit();
-        // entity->render = new RenderUnit(triangle);
+        Entity entity = em_.createEntity();
+        em_.addUnit(entity, new PositionUnit({0, 0}));
 
-        add(entity);
+        RenderUnit* ru = Shape::genTriangle();
+        ru->useTransform_ = true;
+        ru->transformBuffer_ = MTLEngine::getDevice()->newBuffer(
+            sizeof(simd::float2),
+            MTL::ResourceStorageModeShared
+        );
+        em_.addUnit(entity, ru);
 
         // Entity* entity2 = new Entity;
         // entity2->test = new TestUnit();
 
-        addSystem(new RenderSystem(getEntities()));
+        addSystem(new RenderSystem);
+        addSystem(new MySystem);
     };
 };
 
