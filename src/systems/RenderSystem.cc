@@ -3,9 +3,9 @@
 #include "MTLEngine.h"
 
 void RenderSystem::init(EntityManager* em) {
-    spdlog::info("RenderSystem init");
     em_ = em;
     createRenderPipeline();
+    spdlog::info("RenderSystem init over");
 };
 
 void RenderSystem::update() {
@@ -79,15 +79,25 @@ void RenderSystem::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandE
             memcpy(unit->transformBuffer_->contents(), &pos, sizeof(simd_float2));
         }
 
+        renderCommandEncoder->setVertexBuffer(unit->vertex_.buffer, 0, 0);
         if (unit->useTransform_) {
             renderCommandEncoder->setVertexBuffer(unit->transformBuffer_, 0, 1);
         }
 
-        renderCommandEncoder->setVertexBuffer(unit->vertex_.buffer, 0, 0);
-        renderCommandEncoder->drawPrimitives(
-            unit->vertex_.primitiveType,
-            (NS::UInteger)unit->vertex_.start,
-            (NS::UInteger)unit->vertex_.count
-        );
+        if (unit->useIndex_) {
+            renderCommandEncoder->drawIndexedPrimitives(
+                unit->vertex_.primitiveType,
+                unit->vertexIndex_.count,
+                unit->vertexIndex_.type,
+                unit->vertexIndex_.buffer,
+                0
+            );
+        } else {
+            renderCommandEncoder->drawPrimitives(
+                unit->vertex_.primitiveType,
+                (NS::UInteger)unit->vertex_.start,
+                (NS::UInteger)unit->vertex_.count
+            );
+        }
     });
 }
