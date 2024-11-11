@@ -70,33 +70,24 @@ void RenderSystem::encodeRenderCommand(MTL::RenderCommandEncoder* renderCommandE
     renderCommandEncoder->setRenderPipelineState(metalRenderPSO_);
 
     em_->forEach<RenderUnit>([&](Entity entity, RenderUnit* unit) {
-        // position
-        PositionUnit* posUnit = em_->getUnit<PositionUnit>(entity);
-        if (posUnit) {
-            simd::float2 pos;
-            pos.x = posUnit->data_.x;
-            pos.y = posUnit->data_.y;
-            memcpy(unit->transformBuffer_->contents(), &pos, sizeof(simd_float2));
+        renderCommandEncoder->setVertexBuffer(unit->data_.vertexBuffer, 0, 0);
+        if (unit->config_.useTransform) {
+            renderCommandEncoder->setVertexBuffer(unit->data_.transformBuffer, 0, 1);
         }
 
-        renderCommandEncoder->setVertexBuffer(unit->vertex_.buffer, 0, 0);
-        if (unit->useTransform_) {
-            renderCommandEncoder->setVertexBuffer(unit->transformBuffer_, 0, 1);
-        }
-
-        if (unit->useIndex_) {
+        if (unit->config_.useIndex) {
             renderCommandEncoder->drawIndexedPrimitives(
-                unit->vertex_.primitiveType,
-                unit->vertexIndex_.count,
-                unit->vertexIndex_.type,
-                unit->vertexIndex_.buffer,
+                unit->config_.primitiveType,
+                unit->config_.vertexIndexCount,
+                unit->config_.vertexIndexType,
+                unit->data_.vertexIndexBuffer,
                 0
             );
         } else {
             renderCommandEncoder->drawPrimitives(
-                unit->vertex_.primitiveType,
-                (NS::UInteger)unit->vertex_.start,
-                (NS::UInteger)unit->vertex_.count
+                unit->config_.primitiveType,
+                (NS::UInteger)0,
+                (NS::UInteger)unit->config_.vertexCount
             );
         }
     });

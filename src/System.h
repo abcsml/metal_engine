@@ -4,3 +4,4 @@
 #include "systems/RenderSystem.h"
 #include "systems/ClockSystem.h"
 #include "systems/PhysicSystem.h"
+#include "systems/RenderUnitUpdateSystem.h"
