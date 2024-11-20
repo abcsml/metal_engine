@@ -2,30 +2,9 @@
 
 #include "common.h"
 #include "units/Unit.h"
+#include "units/VertexUnit.h"
 #include "units/ShapeUnit.h"
 #include "units/TransFormUnit.h"
-
-struct VertexData {
-    simd::float2 position;
-    uint32_t color;
-
-    VertexData() {};
-    VertexData(float x, float y, uint32_t c) {
-        position.x = x;
-        position.y = y;
-        color = c;
-    }
-};
-
-class VertexUnit: public Unit {
-public:
-    std::vector<VertexData> data_;
-};
-
-class VertexIndexUnit: public Unit {
-public:
-    std::vector<std::uint16_t> data_;
-};
 
 struct RenderConfig {
     bool useIndex = false;
@@ -50,6 +29,7 @@ public:
 
     // 关联其他unit
     TransFormUnit* transformUnit_;
+    ShapeUnit* shapeUnit_;
 
     RenderUnit();
     RenderUnit(RenderConfig config, RenderData data): config_(config), data_(data) {};
@@ -58,6 +38,7 @@ public:
     ~RenderUnit();
 
     void addTransform(TransFormUnit* transform);
+    void updateShapeUnit(ShapeUnit* shape);
 };
 
 class ColorUnit: public Unit {

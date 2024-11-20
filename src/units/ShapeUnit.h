@@ -2,10 +2,11 @@
 
 #include <simd/simd.h>
 #include "units/Unit.h"
+#include "units/VertexUnit.h"
 
 enum ShapeType {
-    Triangle,
     Circle,
+    Triangle,
     Rectangle
 };
 
@@ -30,18 +31,34 @@ struct RectangleShapeData {
 };
 
 class ShapeUnit: public Unit {
+private:
+    const int circleSmooth_ = 32;
+
 public:
     ShapeType type_;
 
     // 三选一
-    TriangleShapeData triangle_;
-    CircleShapeData circle_;
-    RectangleShapeData rectangle_;
+    CircleShapeData circle_ = {
+        {0,0},
+        0.5
+    };
+    TriangleShapeData triangle_ = {
+        {0,0},
+        {-0.5,0},
+        {0.5,0},
+        {0,0.866}
+    };
+    RectangleShapeData rectangle_ = {
+        {0,0},
+        {-0.5,0.5},
+        {0.5,0.5}
+    };
 
-    uint32_t color_; // RGBA
-    bool onlyFrame_; // 只留边框
+    uint32_t color_ = 0; // RGBA
+    bool onlyFrame_ = false; // 只留边框
 
-    ShapeUnit(ShapeType type, uint32_t color): type_(type), color_(color) {
-        // TODO
-    }
+    ShapeUnit(ShapeType type = Circle, uint32_t color = 0);
+
+    VertexUnit genVertexUnit();
+    VertexIndexUnit genVertexIndexUnit();
 };
