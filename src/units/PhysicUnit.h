@@ -2,6 +2,7 @@
 
 #include "units/Unit.h"
 #include "simd/simd.h"
+#include "ShapeUnit.h"
 
 class PhysicUnit: public Unit {
 public:
@@ -11,18 +12,11 @@ public:
         float y;
     } v_;
 
+    ShapeUnit* collisionBox_ = nullptr;
+
     PhysicUnit(float m = 1, V v = {0, 0}): m_(m), v_(v) {};
-};
 
-class CollisionBoxUnit: public Unit {
-public:
-    struct CircleBox {
-        simd::float2 center;
-        float radius;
-    };
-
-    struct RectBox {
-    };
-
-    // std::vector<>
+    void addCollisionBox(ShapeUnit* collisionBox) {
+        collisionBox_ = collisionBox;
+    }
 };

@@ -4,8 +4,8 @@ using namespace metal;
 using TransFormData = simd::float3x3;
 
 struct VertexData {
-    float2 position;
-    uint32_t color;
+    float2 position [[attribute(0)]];
+    uint32_t color [[attribute(1)]];
 };
 
 struct VertexOut {
@@ -14,18 +14,21 @@ struct VertexOut {
 };
 
 vertex VertexOut
-vertexShader(uint vertexID [[vertex_id]],
-             constant VertexData* vertexData,
-             constant TransFormData* trans)
+vertexShader(VertexData in [[stage_in]],
+             constant TransFormData &trans [[buffer(1)]])
 {
-    float3 positions = float3(vertexData[vertexID].position, 1.0f);
-    if (trans) {
-        positions *= *trans;
-    }
+    float3 positions = float3(in.position, 1.0f);
+    // if (trans) {
+        positions *= trans;
+    // }
 
     VertexOut out {
-        .position = float4(positions, 1.0f),
-        .color = vertexData[vertexID].color
+        .position = float4(positions.xy, 0.0f, 1.0f),
+        .color = 1
+        // float4((float)((in.color >> 24) & 0xFF) / 255.0, // R
+        //     (float)((in.color >> 16) & 0xFF) / 255.0, // G
+        //     (float)((in.color >> 8) & 0xFF) / 255.0,  // B
+        //     (float)(in.color & 0xFF) / 255.0)        // A
     };
     return out;
 }
